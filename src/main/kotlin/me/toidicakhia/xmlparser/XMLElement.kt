@@ -1,14 +1,12 @@
 package me.toidicakhia.xmlparser
 
-import javax.xml.transform.TransformerFactory
-import javax.xml.transform.dom.DOMSource
-import org.w3c.dom.Node
 import org.w3c.dom.Element
 import org.w3c.dom.Text
-import org.w3c.dom.Document
 import java.io.StringWriter
-import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.OutputKeys
+import javax.xml.transform.TransformerFactory
+import javax.xml.transform.dom.DOMSource
+import javax.xml.transform.stream.StreamResult
 
 class XMLElement(val element: Element) {
 	fun getConfig(key: String) = getConfigList(key).firstOrNull()

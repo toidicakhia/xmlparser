@@ -1,9 +1,9 @@
 package me.toidicakhia.xmlparser
 
-import javax.xml.parsers.DocumentBuilderFactory
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
+import javax.xml.parsers.DocumentBuilderFactory
 
 object XMLParser {
     @JvmStatic
