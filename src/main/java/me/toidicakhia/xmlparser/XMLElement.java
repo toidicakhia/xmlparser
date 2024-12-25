@@ -74,6 +74,13 @@ public class XMLElement {
         return new XMLElement(child);
     }
 
+    public XMLElement createNewProperty(String key) {
+        Document doc = element.getOwnerDocument();
+        Element child = doc.createElement(key);
+        element.appendChild(child);
+        return new XMLElement(child);
+    }
+
     public void removePropertyWithValue(String key, String value) {
         Node child = element.getFirstChild();
 
@@ -96,7 +103,7 @@ public class XMLElement {
         addPropertyString(key, newValue);
     }
 
-    public void removeAllProperties(String key) {
+    public void removeProperty(String key) {
         Node child = element.getFirstChild();
 
         while (child != null) {
