@@ -28,6 +28,8 @@ public class Main {
 
         versions.addPropertyString("version", "11111111");
         versions.removePropertyWithValue("version", "22222");
+        versioning.setAttribute("abc", "123");
+        versioning.removeAttribute("bcd");
 
         System.out.println(xml.toXML());
     } catch (Exception e) {

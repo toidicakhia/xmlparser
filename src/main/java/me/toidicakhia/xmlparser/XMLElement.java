@@ -1,5 +1,6 @@
 package me.toidicakhia.xmlparser;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -65,8 +66,10 @@ public class XMLElement {
     }
 
     public XMLElement addPropertyString(String key, String value) {
-        Element child = element.getOwnerDocument().createElement(key);
-        child.setTextContent(value);
+        Document doc = element.getOwnerDocument();
+        Element child = doc.createElement(key);
+        Text text = doc.createTextNode(value);
+        child.appendChild(text);
         element.appendChild(child);
         return new XMLElement(child);
     }
@@ -78,8 +81,7 @@ public class XMLElement {
             if (child instanceof Element) {
                 Element childElement = (Element) child;
                 if (childElement.getTagName().equalsIgnoreCase(key) &&
-                    childElement.getParentNode() == element &&
-                    childElement.getTextContent().equals(value)) {
+                    childElement.getParentNode() == element && childElement.getTextContent().equals(value)) {
                     element.removeChild(child);
                     return;
                 }
@@ -107,6 +109,14 @@ public class XMLElement {
             }
             child = next;
         }
+    }
+
+    public void setAttribute(String key, String value) {
+        element.setAttribute(key, value);
+    }
+
+    public void removeAttribute(String key) {
+        element.removeAttribute(key);
     }
 
     public String toXML() {
