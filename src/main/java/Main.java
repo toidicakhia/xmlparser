@@ -31,7 +31,7 @@ public class Main {
         versioning.setAttribute("abc", "123");
         versioning.setAttribute("jlasdjlas", "111");
 
-        System.out.println(xml.toXML());
+        System.out.println(versions);
     } catch (Exception e) {
         e.printStackTrace();
     }

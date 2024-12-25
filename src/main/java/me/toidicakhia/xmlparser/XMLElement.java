@@ -127,7 +127,8 @@ public class XMLElement {
         element.removeAttribute(key);
     }
 
-    public String toXML() {
+    @Override
+    public String toString() {
         try {
             removeEmptyText(element);
 
