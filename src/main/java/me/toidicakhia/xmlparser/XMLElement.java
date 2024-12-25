@@ -78,6 +78,7 @@ public class XMLElement {
         Node child = element.getFirstChild();
 
         while (child != null) {
+            Node nextChild = child.getNextSibling();
             if (child instanceof Element) {
                 Element childElement = (Element) child;
                 if (childElement.getTagName().equalsIgnoreCase(key) &&
@@ -86,7 +87,7 @@ public class XMLElement {
                     return;
                 }
             }
-            child = child.getNextSibling();
+            child = nextChild;
         }
     }
 
@@ -121,6 +122,8 @@ public class XMLElement {
 
     public String toXML() {
         try {
+            removeEmptyText(element);
+
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -131,6 +134,21 @@ public class XMLElement {
             return writer.toString().trim();
         } catch (Exception e) {
             throw new RuntimeException("Error converting XML to String", e);
+        }
+    }
+
+    // https://stackoverflow.com/questions/47332629/java-writing-to-xml-file-indents-everything-except-the-first-element
+    private void removeEmptyText(Node node) {
+        Node child = node.getFirstChild();
+
+        while (child != null) {
+            Node nextChild = child.getNextSibling();
+            if (child.getNodeType() == Node.TEXT_NODE){
+                if (child.getTextContent().trim().isEmpty())
+                    node.removeChild(child);
+            } else
+                removeEmptyText(child);
+            child = nextChild;
         }
     }
 }
