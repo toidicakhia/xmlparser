@@ -1,27 +1,29 @@
 package me.toidicakhia.xmlparser;
 
-import org.w3c.dom.Element;
 import org.w3c.dom.Document;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import org.w3c.dom.Element;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
 
 public class XMLParser {
     public static XMLElement parse(String text) throws Exception {
-        return parse(new java.io.ByteArrayInputStream(text.getBytes()));
+        return parse(new ByteArrayInputStream(text.getBytes()));
     }
 
     public static XMLElement parse(InputStream inputStream) throws Exception {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-        org.w3c.dom.Document doc = docBuilder.parse(inputStream);
+        Document doc = docBuilder.parse(inputStream);
         return new XMLElement(doc.getDocumentElement());
     }
 
     public static XMLElement parse(File file) throws Exception {
-        return parse(new FileInputStream(file));
+        return parse(Files.newInputStream(file.toPath()));
     }
 
     public static XMLElement newXML(String rootElementName) throws Exception {

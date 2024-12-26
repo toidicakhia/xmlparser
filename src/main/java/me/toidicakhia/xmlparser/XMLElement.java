@@ -127,13 +127,16 @@ public class XMLElement {
         element.removeAttribute(key);
     }
 
-    @Override
-    public String toString() {
+    public String getAttribute(String key) {
+        return element.getAttribute(key);
+    }
+
+    public String toString(Boolean declareXMLType) {
         try {
             removeEmptyText(element);
 
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, declareXMLType ? "no" : "yes");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
@@ -143,6 +146,11 @@ public class XMLElement {
         } catch (Exception e) {
             throw new RuntimeException("Error converting XML to String", e);
         }
+    }
+
+    @Override
+    public String toString() {
+        return toString(false);
     }
 
     // https://stackoverflow.com/questions/47332629/java-writing-to-xml-file-indents-everything-except-the-first-element
